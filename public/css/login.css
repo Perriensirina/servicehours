@@ -1,0 +1,44 @@
+/* login.css */
+
+body {
+    background-color: white;
+    min-height: 100vh;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+h1 {
+    color: red;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+input[type="email"],
+input[type="password"] {
+    border: 1px solid #003366; /* dark blue */
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    color: #1f2937;
+}
+
+::placeholder {
+    color: #9ca3af;
+}
+
+button {
+    background-color: #003366;
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+

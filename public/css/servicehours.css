@@ -1,0 +1,128 @@
+/* ---- Overview card (glass) ---- */
+.overview-card {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    color: #fff;
+}
+
+/* make the page look good on both light/dark nav backgrounds
+   caller should ensure contrast with their header */
+body {
+    --accent-bg: rgba(8,8,12,0.6);
+}
+
+/* ---- Table styling ---- */
+.custom-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px; /* spacing between rows */
+    margin-bottom: 0;
+}
+
+/* header */
+.custom-table thead tr {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    border-radius: 10px;
+}
+
+.custom-table thead th {
+    padding: 12px 16px;
+    font-weight: 700;
+    text-align: left;
+    border: none;
+    vertical-align: middle;
+}
+
+/* body rows */
+.custom-table tbody tr {
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border-radius: 10px;
+    transition: transform 0.15s ease, background 0.15s ease;
+    box-shadow: 0 2px 10px rgba(2,6,23,0.16);
+}
+
+.custom-table tbody tr:hover {
+    transform: translateY(-4px);
+    background: rgba(255,255,255,0.06);
+}
+
+.custom-table td {
+    padding: 14px 16px;
+    vertical-align: middle;
+    border: none;
+    color: #eaeaea;
+}
+
+/* make table rows rounded visually (works across browsers) */
+.custom-table tbody tr td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.custom-table tbody tr td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* ---- Status badges ---- */
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.status-badge.success { background: #28a745; }
+.status-badge.pending { background: #ffc107; color: #000; }
+.status-badge.error   { background: #dc3545; }
+.status-badge.info    { background: #17a2b8; }
+
+/* ---- Small helpers ---- */
+.list-unstyled li { margin-bottom: 6px; }
+.user-actions form { display: inline-block; margin-left: 6px; }
+
+/* ---- Popup alerts (success + error) ---- */
+.popup-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 40px;
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    color: #fff;
+    font-weight: 600;
+    z-index: 1050;
+    min-width: 260px;
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.popup-alert .icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+}
+
+/* Success icon gradient */
+.popup-success .icon {
+    background: radial-gradient(circle at 30% 20%, #ff80d0, #7a00ff);
+}
+
+/* Error icon gradient */
+.popup-error .icon {
+    background: radial-gradient(circle at 30% 20%, #ff7a7a, #cc0000);
+}

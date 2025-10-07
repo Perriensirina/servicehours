@@ -1,0 +1,77 @@
+h1 {
+    color: red;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    min-height: 100vh;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+form {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background: white;
+    padding: 0.5rem 2rem;
+    border-radius: 8px;
+}
+
+label {
+    font-weight: 800;
+}
+
+input, select, button {
+    display: block;
+    margin: 1rem 0;
+    padding: 0.75rem;
+    font-size: 1rem;
+}
+
+button {
+    background-color: #003366;
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+
+
+
+#timer {
+    font-size: 2rem;
+    color: green;
+}
+
+.btn-green, .btn-red {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-green {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-red {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-container {
+    display: flex;
+}

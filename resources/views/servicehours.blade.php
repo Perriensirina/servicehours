@@ -42,11 +42,13 @@
                     <a class="btn btn-outline-light btn-lg w-100" href="{{ route('departments.index') }}">Settings</a>
                 @endif
 
-                @if($user && $user->isAdmin())
-                <a class="btn btn-outline-light btn-lg w-100" href="{{ route('activity.logs') }}">Activity Logs</a>
+                @if($user && ($user->isAdmin() || $user->isTeamleader()))
+                    <a class="btn btn-outline-light btn-lg w-100" href="{{ route('activity.logs') }}">Activity Logs</a>
                 @endif
 
-                <a href="{{ route('register') }}" class="btn btn-outline-light btn-lg">Register new user</a>
+                @if($user && ($user->isAdmin() || $user->isTeamleader()))
+                    <a href="{{ route('register') }}" class="btn btn-outline-light btn-lg">Register new user</a>
+                @endif
             </div>
         </div>
     </div>

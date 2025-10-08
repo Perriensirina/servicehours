@@ -15,8 +15,8 @@
     <div class="main-container">
         <a href="{{ url('/servicehours') }}" class="back-arrow">&#8592;</a>
         <div class="position-absolute top-0 end-0 p-3">
-            <a href="{{ url('/servicehours') }}" class="bi bi-house fs-3 text-white"></a>
             <a href="{{ url('/account') }}" class="bi bi-person fs-3 text-white"></a>
+            <a href="{{ url('/servicehours') }}" class="bi bi-house fs-3 text-white"></a>
         </div>
         
          <div class="welcome-card">

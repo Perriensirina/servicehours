@@ -1,4 +1,3 @@
-
 body {
     background: url("../images/bg2.png");
     background-size: cover;
@@ -19,6 +18,24 @@ body {
 .settings-heading {
     color: white;
     margin-bottom: 1rem;
+}
+
+.container-filter {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+}
+
+.container-filter {
+    color: white;
+}
+
+.filter-btn {
+    grid-column: 1/3;
+}
+
+.export-csv-btn {
+    grid-column: 1/3;
 }
 
 /* hamburger-menu */
@@ -65,6 +82,10 @@ body {
     height: 100vh;
 }
 
+.clear-filter-btn {
+    display: none;
+}
+
 /* Glass effect card */
 .welcome-card {
     background: rgba(255, 255, 255, 0.15);
@@ -77,8 +98,7 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
     text-align: center;
     color: #fff;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin: 3rem 1rem;
 }
 
 /* Logo + title alignment */
@@ -107,8 +127,6 @@ body {
     font-size: 1rem;
     opacity: 0.85;
 }
-
-
 
 /* Buttons */
 .btn-lg {
@@ -212,7 +230,7 @@ tr{
 /* Style the table within the glassy container */
 .glassy-table-container table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: collapse; 
 }
 
 .glassy-table-container {
@@ -239,9 +257,9 @@ tr{
 .glassy-badge {
     display: inline-block;
     padding: 0.35em 0.65em;  
-    font-size: 0.75em;  
+    font-size: 0.75em;      
     font-weight: 700;      
-    line-height: 1;         
+    line-height: 1;          
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
@@ -302,6 +320,21 @@ tr{
     font-weight: 600;
     padding-bottom: 1rem;
     font-size: 1.3rem;
+    margin-top: 1rem;
+}
+
+.arrow-style {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: 1.5rem;
+    color: #fff;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.account {
+    margin-right: 1rem;
 }
 
 .nav-link-btn {
@@ -321,6 +354,53 @@ tr{
     font-weight: 600;
 }
 
+.card-styling {
+    background-color: red;
+}
+
+.mobile-card .card-content {
+            transition: max-height 0.3s ease;
+        }
+
+/* Glassy card */
+.glassy-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    color: #fff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* Optional: add small spacing for summary text */
+.card-header small {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* Chevron icon transition */
+.card-header i {
+    transition: transform 0.3s ease;
+}
+
+.card-content {
+    max-height: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.mobile-card.active .card-content {
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+}
+
+.action-section {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 /* Slide-in animation */
 @keyframes slideIn {
@@ -348,6 +428,10 @@ tr{
     transform: translateX(-5px);
     color: #f8f9fa;
 }
+/* 
+.filter-container {
+    display: none;
+} */
 
 .filter-container.open {
     display: block;
@@ -373,6 +457,14 @@ tr{
     .glassy-table {
         width: 100%;
         background: rgba(255, 255, 255, 0.1);
+    }
+
+    .clear-filter-btn {
+        display: block;
+    }
+
+    .container-filter {
+        display: flex;
     }
 }
 

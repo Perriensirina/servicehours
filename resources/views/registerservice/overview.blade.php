@@ -14,8 +14,8 @@
 <body>
     <!-- Navbar -->
     <div class="position-absolute top-0 end-0 p-3">
+            <a href="{{ url('/account') }}" class="bi bi-person fs-3 text-white account"></a>
             <a href="{{ url('/servicehours') }}" class="bi bi-house fs-3 text-white"></a>
-            <a href="{{ url('/account') }}" class="bi bi-person fs-3 text-white"></a>
     </div>
     <div class="container py-5">
         <a href="{{ route('servicehours') }}" class="back-arrow">&#8592;</a>
@@ -31,11 +31,11 @@
 
         <!-- Admin Filters -->
         <p class="demo"></p>
-        <button class="filter hidden-btn btn btn-outline-light btn-sm">X Filter</button>
+        <button class="filter hidden-btn btn btn-outline-light btn-sm clear-filter-btn">X Filter</button>
         <div id="filterContainer" class="filter-container">
             @if(auth()->user()->role === 'admin')
-                <form method="GET" action="{{ route('registerservice.overview') }}" class="row g-3 mb-4 align-items-end">
-                    <div class="col-md-3">
+                <form method="GET" action="{{ route('registerservice.overview') }}" class="row g-3 mb-4 align-items-end container-filter">
+                    <div class="col-md-3 input1">
                         <label for="from_date" class="form-label">From</label>
                         <input type="date" name="from_date" class="form-control" value="{{ request('from_date') }}">
                     </div>
@@ -59,10 +59,10 @@
                             <option value="0" {{ request('invoiced') === '0' ? 'selected' : '' }}>No</option>
                         </select>
                     </div>
-                    <div class="col-md-2 d-grid">
+                    <div class="col-md-2 d-grid filter-btn">
                         <button type="submit" class="btn btn-primary">🔍 Filter</button>
                     </div>
-                    <div class="col-md-2 d-grid">
+                    <div class="col-md-2 d-grid export-csv-btn">
                         <a href="{{ route('registerservice.exportCsv', request()->query()) }}" class="btn btn-success">Export CSV</a>
                     </div>
                 </form>
@@ -143,11 +143,11 @@
                                     }
                                 @endphp
                                 @if($hasActiveUsers)
-                                    <span class="glassy-badge bl">In Progress</span>
+                                    <br><span class="glassy-badge bl">In Progress</span>
                                 @elseif($totalSeconds > 0)
                                     {{ gmdate('H:i:s', $totalSeconds) }}
                                     @if(!$registration->validated)
-                                        <span class="glassy-badge gray">Awaiting validation</span>
+                                    <br><span class="glassy-badge gray">Awaiting validation</span>
                                     @endif
                                 @endif
                             </td>
@@ -198,7 +198,7 @@
                             <td class="glassy-table-container">
                                 <ul class="list-unstyled mb-0">
                                     @foreach($registration->users as $user)
-                                        <li class="mb-1 assigned-users-col">
+                                        <li class="mb-1 assigned-users-col action-section">
                                             <p class="user-name">{{ $user->name }}</p>
                                             @php
                                                 $time_spent = null;
@@ -272,93 +272,107 @@
 
         <!-- Mobile stacked cards -->
         <div class="block md:hidden space-y-4">
-            @forelse ($registrations as $registration)
-                <div class="glassy-table p-4 rounded-lg">
-                    <p><strong>Department:</strong> {{ $registration->department }}</p>
-                    <p><strong>Shipment:</strong> {{ $registration->shipment }}</p>
-                    <p><strong>Box#:</strong> {{ $registration->box_number }}</p>
-                    <p><strong>U.L.:</strong> {{ $registration->ul }}</p>
-                    <p><strong>Supplier:</strong> {{ $registration->supplier }}</p>
-                    <p><strong>AT#:</strong> {{ $registration->AT_number }}</p>
-                    <p><strong>Zone:</strong> {{ $registration->zone }}</p>
-                    <p><strong>Reason:</strong> {{ $registration->reason }}</p>
+            @forelse($registrations as $registration)
+                @php
+                    $totalSeconds = 0;
+                    $hasActiveUsers = false;
+                    foreach ($registration->users as $user) {
+                        $p = $user->pivot;
+                        if ($p->started_at && $p->stopped_at) {
+                            $totalSeconds += \Carbon\Carbon::parse($p->started_at)
+                                            ->diffInSeconds(\Carbon\Carbon::parse($p->stopped_at));
+                        } elseif ($p->started_at && !$p->stopped_at) {
+                            $hasActiveUsers = true;
+                        }
+                    }
 
-                    <div>
-                        <strong>Time spent:</strong>
-                        @php
-                            $totalSeconds = 0;
-                            $hasActiveUsers = false;
-                            foreach ($registration->users as $user) {
-                                $p = $user->pivot;
-                                if ($p->started_at && $p->stopped_at) {
-                                    $totalSeconds += \Carbon\Carbon::parse($p->started_at)
-                                                    ->diffInSeconds(\Carbon\Carbon::parse($p->stopped_at));
-                                } elseif ($p->started_at && !$p->stopped_at) {
-                                    $hasActiveUsers = true;
-                                }
-                            }
-                        @endphp
-                        @if($hasActiveUsers)
-                            <span class="glassy-badge bl">In Progress</span>
-                        @elseif($totalSeconds > 0)
-                            {{ gmdate('H:i:s', $totalSeconds) }}
-                            @if(!$registration->validated)
-                                <span class="glassy-badge gray">Awaiting validation</span>
-                            @endif
-                        @endif
+                    // Prepare summary text
+                    $summaryTime = $hasActiveUsers ? 'In Progress' : ($totalSeconds > 0 ? gmdate('H:i:s', $totalSeconds) : '-');
+                    $statusBadge = $registration->validated ? 'Validated' : 'Pending';
+                @endphp
+
+                <div class="mobile-card glassy-card rounded-lg overflow-hidden">
+                    <!-- Header with summary -->
+                    <div class="card-header flex justify-between items-center p-4 cursor-pointer">
+                        <div class="flex flex-col">
+                            <span class="font-semibold text-white">{{ $registration->department }} — Box#: {{ $registration->box_number }}</span>
+                            <small class="text-white/80">
+                                {{ $registration->ul }} | {{ $registration->shipment ?? '-' }} | {{ $summaryTime }} | {{ $statusBadge }}
+                            </small>
+                        </div>
+                        <i class="bi bi-chevron-down text-white text-xl transition-transform duration-300"></i>
                     </div>
 
-                    <div class="mt-2">
-                        <strong>Status:</strong><br>
-                        @if(!$registration->validated)
-                            @if(auth()->user()->role === 'teamleader' || auth()->user()->role === 'admin')
-                                @php
-                                    $allDone = $registration->users->every(fn($u) => $u->pivot->started_at && $u->pivot->stopped_at);
-                                @endphp
-                                @if($allDone)
-                                    <form action="{{ route('tasks.validate', $registration->id) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success btn-sm">Validate</button>
-                                    </form>
+                    <!-- Collapsible content -->
+                    <div class="card-content max-h-0 overflow-hidden px-4 transition-[max-height] duration-300">
+                        <p><strong>Supplier</strong> {{ $registration->supplier }}</p>
+                        <p><strong>AT#</strong> {{ $registration->AT_number }}</p>
+                        <p><strong>Zone</strong> {{ $registration->zone }}</p>
+                        <p><strong>Reason</strong> {{ $registration->reason }}</p>
+
+                        <p><strong>Time spent</strong><br>
+                            @if($hasActiveUsers)
+                                <span class="glassy-badge bl">In Progress</span>
+                            @elseif($totalSeconds > 0)
+                                {{ gmdate('H:i:s', $totalSeconds) }}
+                                @if(!$registration->validated)
+                                    <br>
+                                    <span class="glassy-badge gray">Awaiting validation</span>
+                                @endif
+                            @endif
+                        </p>
+
+                        <div class="mt-2">
+                            <strong>Status</strong><br>
+                            {{-- Status logic --}}
+                            @if(!$registration->validated)
+                                @if(auth()->user()->role === 'teamleader' || auth()->user()->role === 'admin')
+                                    @php
+                                        $allDone = $registration->users->every(fn($u) => $u->pivot->started_at && $u->pivot->stopped_at);
+                                    @endphp
+                                    @if($allDone)
+                                        <form action="{{ route('tasks.validate', $registration->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success btn-sm">Validate</button>
+                                        </form>
+                                    @else
+                                        <span class="glassy-badge ylw">Waiting</span><br>
+                                    @endif
                                 @else
-                                    <span class="glassy-badge ylw">Waiting</span>
+                                    <span class="glassy-badge org">⏳ Pending</span><br>
                                 @endif
                             @else
-                                <span class="glassy-badge org">⏳ Pending</span>
+                                <span class="glassy-badge dgrn">Validated</span>
+                                @if(auth()->user()->role === 'admin' && !$registration->invoiced)
+                                    <form action="{{ route('tasks.invoice', $registration->id) }}" method="POST" class="mt-2">
+                                        @csrf
+                                        <button type="submit" class="btn btn-warning btn-sm">💰 Invoice</button>
+                                    </form>
+                                @endif
                             @endif
-                        @else
-                            <span class="glassy-badge dgrn">Validated</span>
-                            @if(auth()->user()->role === 'admin' && !$registration->invoiced)
-                                <form action="{{ route('tasks.invoice', $registration->id) }}" method="POST" class="mt-2">
-                                    @csrf
-                                    <button type="submit" class="btn btn-warning btn-sm">💰 Invoice</button>
-                                </form>
-                            @endif
-                        @endif
-                        <div class="mt-2">
-                            @switch($registration->status)
-                                @case('Validated')
-                                    <span class="glassy-badge ylw">Validated</span>
-                                    @break
-                                @case('🚫 Not Started')
-                                    <span class="glassy-badge prpl">Not Started</span>
-                                    @break
-                                @case('⏳ Active')
-                                    <span class="glassy-badge grn">Active</span>
-                                    @break
-                            @endswitch
-                            @if($registration->invoiced)
-                                <span class="glassy-badge grn">Invoiced</span>
-                            @endif
+                            <div class="mt-2">
+                                @switch($registration->status)
+                                    @case('Validated')
+                                        <span class="glassy-badge ylw">Validated</span>
+                                        @break
+                                    @case('🚫 Not Started')
+                                        <span class="glassy-badge prpl">Not Started</span>
+                                        @break
+                                    @case('⏳ Active')
+                                        <span class="glassy-badge grn">Active</span>
+                                        @break
+                                @endswitch
+                                @if($registration->invoiced)
+                                    <span class="glassy-badge grn">Invoiced</span>
+                                @endif
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="mt-2">
-                        <strong>Assigned Users:</strong>
-                        <ul class="list-unstyled">
+                        <div>
                             @foreach($registration->users as $user)
-                                <li class="mb-1 assigned-users-col">
-                                    <p class="user-name">{{ $user->name }}</p>
+                                <li class="mb-1 assigned-users-col action-section">
+                                    <strong>Assigned Users:</strong>
+                                    <p>{{ $user->name }}</p>
                                     @php
                                         $time_spent = null;
                                         if ($user->pivot->started_at && $user->pivot->stopped_at) {
@@ -378,6 +392,7 @@
                                         @endif
                                     @endif
                                     <div class="user-actions">
+                                        {{-- Operator controls --}}
                                         @if(auth()->user()->role === 'operator' && auth()->id() === $user->id)
                                             @if(!$user->pivot->started_at || $user->pivot->stopped_at)
                                                 <form action="{{ route('tasks.start.user', [$registration->id, $user->id]) }}" method="POST">
@@ -416,20 +431,16 @@
                                     </div>
                                 </li>
                             @endforeach
-                        </ul> 
+                        </div>
                     </div>
                 </div>
             @empty
-                <p class="text-center">No service registrations found.</p>
+                <p class="text-center text-gray-400">No service registrations found.</p>
             @endforelse
-        </div>
-
-        <div class="mt-3">
-            <a href="{{ route('servicehours') }}" class="btn btn-outline-light btn-sm">&#8592;</a>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <script src="{{ asset('js/overview.js') }}"></script>                                     -->
+    <script src="{{ asset('js/overview.js') }}"></script>                                    
 </body>
 </html>

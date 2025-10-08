@@ -8,7 +8,7 @@
 <body>
 
 <div class="container">
-    <h2 class="mb-4">📜 Activity Overview</h2>
+    <h2 class="mb-4">Activity Overview</h2>
 
     <div class="list-group">
         @foreach($logs as $log)

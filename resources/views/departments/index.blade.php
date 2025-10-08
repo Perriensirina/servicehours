@@ -223,8 +223,8 @@
                     </table>
                 </div>
             </section>
-        </div> <!-- end container-fluid -->
-    </div> <!-- end container -->
+        </div> 
+    </div> 
 
     <script src="{{ asset('js/nav-menu.js') }}"></script>
 </body>

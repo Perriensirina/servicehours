@@ -214,7 +214,7 @@ class DepartmentController extends Controller
             ]
         );
 
-        // Perform delete
+        // delete
         $reason->delete();
 
         return back()->with('success', 'Reason deleted.');

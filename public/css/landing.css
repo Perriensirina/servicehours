@@ -88,7 +88,7 @@ body {
     justify-content: center;
     gap: 12px;
     margin-bottom: 1.5rem;
-    flex-wrap: wrap; /* ensures good behavior on tiny screens */
+    flex-wrap: wrap; 
 }
 
 .grid-container img {
@@ -207,22 +207,17 @@ tr{
     -webkit-backdrop-filter: blur(12px);
     padding: 1rem;
     color: #fff;
-    /* ❌ remove these */
-    /* width: 100%; */
-    /* max-width: 1200px; */
-    /* margin-left: 1rem; */
-    /* margin-right: 1rem; */
 }
 
 /* Style the table within the glassy container */
 .glassy-table-container table {
     width: 100%;
-    border-collapse: collapse; /* Removes spaces between cells */
+    border-collapse: collapse;
 }
 
 .glassy-table-container {
     /* width: 100%; */
-    overflow-x: auto; /* Keep scrolling on smaller screens */
+    overflow-x: auto; 
 }
 
 .glassy-table-container th,
@@ -238,15 +233,15 @@ tr{
 }
 
 .glassy-table-container tbody tr:hover {
-    background: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
+    background: rgba(255, 255, 255, 0.1); 
 }
 
 .glassy-badge {
     display: inline-block;
-    padding: 0.35em 0.65em;  /* vertical and horizontal padding */
-    font-size: 0.75em;       /* smaller text */
-    font-weight: 700;        /* bold text */
-    line-height: 1;           /* tight line spacing */
+    padding: 0.35em 0.65em;  
+    font-size: 0.75em;  
+    font-weight: 700;      
+    line-height: 1;         
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
@@ -353,10 +348,6 @@ tr{
     transform: translateX(-5px);
     color: #f8f9fa;
 }
-/* 
-.filter-container {
-    display: none;
-} */
 
 .filter-container.open {
     display: block;

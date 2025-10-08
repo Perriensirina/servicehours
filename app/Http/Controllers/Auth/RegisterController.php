@@ -36,7 +36,6 @@ class RegisterController extends Controller
 
         event(new Registered($user));
 
-        // Log in the user after registration (optional)
         auth()->login($user);
 
         return redirect()->route('account');

@@ -36,7 +36,7 @@ class RegisterServiceController extends Controller
             'extra_info'      => 'nullable|string',
         ]);
 
-        // Always create a Task
+        // create a Task
         $task = Task::create([
             'department'    => $validated['department'],
             'shipment'      => $validated['shipment'] ?? null,
@@ -47,10 +47,9 @@ class RegisterServiceController extends Controller
             'reason'        => $validated['task_name'] ?? $validated['reason'],
             'zone'          => $validated['zone'],
             'extra_info'    => $validated['extra_info'] ?? null,
-            'createdUserID' => auth()->id(), // or created_by if your column is named that
+            'createdUserID' => auth()->id(), 
         ]);
 
-        // Log the creation + assignment
         \App\Helpers\ActivityLogger::log(
             'created',
             $task,
@@ -62,7 +61,7 @@ class RegisterServiceController extends Controller
                 'time_spent'   => $task->time_spent,
             ]);
 
-        // Attach users differently based on role
+        // users differently based on role
         if (auth()->user()->role !== 'operator' && $request->filled('assigned_users')) {
             $task->users()->attach($request->assigned_users);
         } else {
@@ -73,56 +72,6 @@ class RegisterServiceController extends Controller
             ->route('registerservice')
             ->with('success', 'Service hours registered successfully.');
     }
-
-
-    // public function overview(Request $request)
-    // {
-    //     $user = auth()->user();
-
-    //     if ($user->role === 'operator') {
-    //         $query = $user->tasks()
-    //             ->where('validated', false)
-    //             ->with('users');
-    //     } else {
-    //         $query = Task::with('users');
-    //     }
-
-    //     // Filter by validation/invoicing state
-    //     switch ($request->filter) {
-    //         case 'validated':
-    //             $query->where('validated', true);
-    //             break;
-    //         case 'not_validated':
-    //             $query->where('validated', false);
-    //             break;
-    //         case 'invoiced':
-    //             $query->where('invoiced', true);
-    //             break;
-    //         case 'not_invoiced':
-    //             $query->where('invoiced', false);
-    //             break;
-    //         case 'not_started':
-    //             $query->whereDoesntHave('users', function ($q) {
-    //                 $q->whereNotNull('service_registrations.started_at');
-    //             });
-    //             break;
-    //     }
-
-    //     // 🔑 Period filter on service_registrations.started_at
-    //     if ($request->filled('from_date') && $request->filled('to_date')) {
-    //         $query->whereHas('users', function ($q) use ($request) {
-    //             $q->whereBetween('service_registrations.started_at', [
-    //                 $request->from_date,
-    //                 \Carbon\Carbon::parse($request->to_date)->endOfDay()
-    //             ]);
-    //         });
-    //     }
-
-    //     $registrations = $query->get();
-
-    //     return view('registerservice.overview', compact('registrations'));
-    // }
-
 
     public function overview(Request $request)
     {
@@ -195,7 +144,6 @@ class RegisterServiceController extends Controller
 
         $pivot = $task->users()->where('user_id', $user->id)->first()->pivot;
 
-        // New: prevent validation if no start time
         if (!$pivot->started_at) {
             return redirect()->back()->with('error', 'Cannot validate user. They have not started the task.');
         }
@@ -214,7 +162,6 @@ class RegisterServiceController extends Controller
 
 
     public function activeTasks(){
-        // Load all tasks with assigned users
         $tasks = Task::with('users')
             ->orderBy('created_at', 'desc')
             ->get();

@@ -1,11 +1,6 @@
 <header>
     <div class="glassy-header">
         <img src="{{ asset('images/IDlogo.png') }}" alt="Logo" width="70px">
-        <!-- <div class="hamburger-menu">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-        </div> -->
             <div class="nav-links">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

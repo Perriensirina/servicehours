@@ -84,7 +84,7 @@
                             }
                         }
 
-                        // ✅ Calculate per started minute
+                        // Calculate per started minute
                         $totalMinutes = ceil($totalSeconds / 60);
                         $hours = $totalMinutes / 60;
 
@@ -93,7 +93,7 @@
                             $hours = $hours * 0.45;
                         }
 
-                        // ✅ Fetch rate dynamically
+                        // Fetch rate dynamically
                         $deptModel = \App\Models\Department::where('name', $department)->first();
                         $rate = $deptModel?->rate ?? 40.00;
 

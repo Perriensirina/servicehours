@@ -7,8 +7,7 @@
     color: #fff;
 }
 
-/* make the page look good on both light/dark nav backgrounds
-   caller should ensure contrast with their header */
+
 body {
     --accent-bg: rgba(8,8,12,0.6);
 }
@@ -17,7 +16,7 @@ body {
 .custom-table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 12px; /* spacing between rows */
+    border-spacing: 0 12px; 
     margin-bottom: 0;
 }
 

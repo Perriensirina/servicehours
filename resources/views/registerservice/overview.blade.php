@@ -82,7 +82,7 @@
                             Invoiced: <strong>{{ request('invoiced') === '1' ? 'Yes' : 'No' }}</strong>;
                         @endif
                         <a href="{{ route('registerservice.overview') }}" class="btn btn-sm btn-outline-secondary ms-3">
-                            ❌ Clear Filters
+                            Clear Filters
                         </a>
                     </div>
                 @endif
@@ -429,7 +429,6 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- <script src="{{ asset('js/overview.js') }}"></script>                                     -->
 </body>

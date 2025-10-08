@@ -22,7 +22,7 @@ form {
 }
 
 input {
-    border: 1px solid #003366; /* dark blue */
+    border: 1px solid #003366;
     padding: 0.75rem 1rem;
     border-radius: 0.25rem;
     color: #1f2937;

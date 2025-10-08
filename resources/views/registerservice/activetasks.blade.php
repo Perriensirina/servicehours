@@ -35,20 +35,6 @@
                     <td data-label="Zone">{{ $task->zone }}</td>
                     <td data-label="Reason">{{ $task->reason }}</td>
                     {{-- New: show assigned users --}}
-                    <!-- <td>
-                        @if(!$task->validated)
-                            @if(auth()->user()->role === 'teamleader' || auth()->user()->role === 'admin')
-                                <form action="{{ route('tasks.validate.user', [$task->id, $user->id]) }}" method="POST">
-                                    @csrf
-                                    <button type="submit">Validate User</button>
-                                </form>
-                            @else
-                                ⏳ Pending
-                            @endif
-                        @else
-                            ✅ Validated
-                        @endif
-                    </td> -->
                     <td>
                         <a href="{{ route('tasks.show', $task->id) }}">
                             View Assigned Users ({{ $task->users->count() }})

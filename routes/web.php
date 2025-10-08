@@ -58,13 +58,11 @@ Route::middleware(['auth', 'role:teamleader,admin'])->group(function () {
 // Validate service hours: teamleader, admin
 Route::middleware(['auth', 'role:teamleader,admin'])->group(function () {
     Route::get('/option2', [ValidationController::class, 'index'])->name('validate.hours');
-    // add more validation-related routes here if needed
 });
 
 // Invoice client: admin only
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/option4', [InvoiceController::class, 'index'])->name('invoice.client');
-    // add more invoice-related routes here if needed
 });
 
 
@@ -129,18 +127,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('departments', DepartmentController::class)->except(['create','edit','show']);
 });
 
-// Route::middleware(['auth', 'role:admin'])->group(function () {
-//     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
-//     Route::post('/departments', [DepartmentController::class, 'store'])->name('departments.store');
-
-//     Route::put('/departments/{department}', [DepartmentController::class, 'updateDepartment'])->name('departments.update');
-//     Route::delete('/departments/{department}', [DepartmentController::class, 'destroyDepartment'])->name('departments.destroy');
-
-//     Route::put('/suppliers/{supplier}', [DepartmentController::class, 'updateSupplier'])->name('suppliers.update');
-//     Route::delete('/suppliers/{supplier}', [DepartmentController::class, 'destroySupplier'])->name('suppliers.destroy');
-
-// });
-
     Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
 
@@ -165,7 +151,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::get('/activity-logs', [ActivityLogController::class, 'index'])
-    ->middleware('auth') // only logged in users
+    ->middleware('auth') 
     ->name('activity.logs');
 
 Route::put('/departments/{department}/rate', [DepartmentController::class, 'updateDepartmentRate'])

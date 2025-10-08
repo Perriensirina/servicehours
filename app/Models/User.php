@@ -58,6 +58,12 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
+    public function isTeamleader()
+    {
+        return $this->role === 'teamleader';
+    }
+
+
         public function timeLogs()
     {
         return $this->hasMany(TaskUserTime::class);

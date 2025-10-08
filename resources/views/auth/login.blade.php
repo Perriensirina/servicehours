@@ -11,13 +11,12 @@
 
 <body>
     <div class="main-container">
-    <a href="{{ url('/') }}" class="back-arrow">&#8592;</a>
         <div class="welcome-card">
             <div class="grid-container">
                 <img src="{{ asset('images/IDlogo.png') }}" alt="Logo">
                 <div class="title">
-                    <h2>Log in</h2>
-                    <p>Welcome back</p>
+                    <h2>Welcome</h2>
+                    <p>Log in here</p>
                 </div>
             </div>
 
@@ -65,7 +64,6 @@
                 <!-- Submit -->
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary btn-lg">Log In</button>
-                    <a href="{{ route('register') }}" class="btn btn-outline-light btn-lg">Register</a>
                 </div>
             </form>
         </div>

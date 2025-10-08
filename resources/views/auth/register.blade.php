@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="main-container">
-        <a href="{{ url('/login') }}" class="back-arrow">&#8592;</a>
+        <a href="{{ url('/servicehours') }}" class="back-arrow">&#8592;</a>
         <div class="welcome-card">
             <div class="grid-container">
                 <img src="{{ asset('images/IDlogo.png') }}" alt="Logo">

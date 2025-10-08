@@ -27,16 +27,26 @@
             </div>
 
             <div class="d-grid gap-3">
-                <a href="/registerservice" class="btn btn-primary btn-lg w-100">Register Task</a>
-                <a href="{{ route('registerservice.overview') }}" class="btn btn-outline-light btn-lg w-100">Overview Task</a>
+
                 @php
                     $user = auth()->user();
                 @endphp
 
+                @if($user && ($user->isAdmin() || $user->isTeamleader()))
+                    <a href="/registerservice" class="btn btn-primary btn-lg w-100">Register Task</a>
+                @endif
+
+                <a href="{{ route('registerservice.overview') }}" class="btn btn-outline-light btn-lg w-100">Overview Task</a>
+
                 @if($user && $user->isAdmin())
                     <a class="btn btn-outline-light btn-lg w-100" href="{{ route('departments.index') }}">Settings</a>
                 @endif
+
+                @if($user && $user->isAdmin())
                 <a class="btn btn-outline-light btn-lg w-100" href="{{ route('activity.logs') }}">Activity Logs</a>
+                @endif
+
+                <a href="{{ route('register') }}" class="btn btn-outline-light btn-lg">Register new user</a>
             </div>
         </div>
     </div>

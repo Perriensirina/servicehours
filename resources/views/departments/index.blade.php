@@ -23,10 +23,10 @@
 
             <!-- Navigation -->
             <nav class="settings-nav mb-4">
-                <a href="#" class="nav-link-btn active" data-target="departments">Departments</a>
-                <a href="#" class="nav-link-btn" data-target="suppliers">Suppliers</a>
-                <a href="#" class="nav-link-btn" data-target="zones">Zones</a>
-                <a href="#" class="nav-link-btn" data-target="reasons">Reasons</a>
+                <a href="#" class="nav-link-btn space-btn active" data-target="departments">Departments</a>
+                <a href="#" class="nav-link-btn space-btn" data-target="suppliers">Suppliers</a>
+                <a href="#" class="nav-link-btn space-btn" data-target="zones">Zones</a>
+                <a href="#" class="nav-link-btn space-btn" data-target="reasons">Reasons</a>
             </nav>
 
             <!-- Departments Section -->

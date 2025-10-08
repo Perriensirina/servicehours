@@ -42,7 +42,7 @@
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="11">No service registrations found.</td></tr>
+                <tr><td colspan="11">No service registrations found. </td></tr>
             @endforelse
         </tbody>
 

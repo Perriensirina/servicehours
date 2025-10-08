@@ -18,6 +18,7 @@ body {
 .settings-heading {
     color: white;
     margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .container-filter {
@@ -201,10 +202,11 @@ body {
     flex-shrink: 0;
 }
 
+
 /* Glassy table container */
 
 .glassy-table {
-    background: rgba(255, 255, 255, 0.5);
+    /* background: rgba(255, 255, 255, 0.5); */
     backdrop-filter: blur(12px);
     border-collapse: separate;
     border-spacing: 0;
@@ -343,6 +345,7 @@ tr{
     text-decoration: none;
     border-radius: 6px;
     transition: background 0.3s ease;
+    margin-top: 1rem;
 }
 
     .nav-link-btn:hover {
@@ -441,6 +444,10 @@ tr{
     width: 100%
 }
 
+.form-control {
+    margin-bottom: 1rem;
+}
+
 /* Tablet and up */
 @media (min-width: 768px) {
     .welcome-card {
@@ -483,7 +490,7 @@ tr{
     
     .glassy-table {
         width: 100%;
-        background: rgba(255, 255, 255, 0.1);
+        /* background: rgba(255, 255, 255, 0.1); */
     }
 
     .filter-container {

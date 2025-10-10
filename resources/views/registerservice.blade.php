@@ -36,8 +36,19 @@
                 </div>
             @endif
 
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <!-- Form -->
-            <form method="POST" action="{{ route('registerservice.store') }}">
+            <form method="POST" action="{{ route('registerservice.store') }}" enctype="multipart/form-data">
+
                 @csrf
 
                 <!-- Department -->
@@ -114,6 +125,11 @@
 
                 <div class="mb-3">
                     <input type="text" id="extra_info" name="extra_info" class="form-control" placeholder="Enter additional info">
+                </div>
+
+                <div class="mb-3">
+                    <label for="attachment">Upload Attachment:</label>
+                    <input type="file" name="attachment" id="attachment" class="form-control">
                 </div>
 
                 <!-- Submit Button -->

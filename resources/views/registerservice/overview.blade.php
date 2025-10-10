@@ -112,9 +112,11 @@
                         <th>AT#</th>
                         <th>Zone</th>
                         <th>Reason</th>
+                        <th>attachment</th>
                         <th>Time spent</th>
                         <th>Status</th>
                         <th>Assigned Users</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody class="glassy-table-container"> 
@@ -128,6 +130,13 @@
                             <td class="glassy-table-container">{{ $registration->AT_number }}</td>
                             <td class="glassy-table-container">{{ $registration->zone }}</td>
                             <td class="glassy-table-container">{{ $registration->reason }}</td>
+                            <td>
+                                @if($registration->attachment)
+                                    <a href="{{ asset('storage/' . $registration->attachment) }}" target="_blank" class="btn btn-info btn-sm">View Attachment</a>
+                                @else
+                                    No Attachment
+                                @endif
+                            </td>
                             <td class="glassy-table-container">
                                 @php
                                     $totalSeconds = 0;
@@ -212,7 +221,7 @@
                                                     <form action="{{ route('tasks.updateTime', [$registration->id, $user->id]) }}" method="POST" style="display:inline;">
                                                         @csrf
                                                         <div class="time-btn-container">
-                                                            <input type="number" name="time_spent" value="{{ round(($time_spent ?? 0) / 60) }}" min="0" step="1" class="time-input" style="width: 100%;">
+                                                            <input type="number" name="time_spent" value="{{ round(($time_spent ?? 0) / 60) }}" min="1" step="1" class="time-input" style="width: 100%;">
                                                             <button type="submit" class="btn btn-info btn-sm">💾</button>
                                                         </div>
                                                     </form>
@@ -259,6 +268,16 @@
                                         </li>
                                     @endforeach
                                 </ul>
+                            </td>
+                            <td>
+                            @if(in_array(auth()->user()->role, ['admin', 'teamleader']))
+                                <form action="{{ route('tasks.destroy', $registration->id) }}" method="POST" style="display:inline;" 
+                                    onsubmit="return confirm('Are you sure you want to delete this task? This action cannot be undone.');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            @endif
                             </td>
                         </tr>
                     @empty

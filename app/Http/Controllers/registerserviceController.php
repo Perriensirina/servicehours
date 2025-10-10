@@ -20,26 +20,38 @@ class RegisterServiceController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'department'      => 'required|string',
-            'shipment'        => 'nullable|string',
-            'box_number'      => 'nullable|string',
-            'ul'              => 'nullable|string',
-            'supplier'        => 'nullable|string',
-            'AT_number'       => 'nullable|string',
-            'zone'            => 'required|string',
-            'reason'          => 'required|string',
+        // dd($request->file('attachment'));
 
-            'task_name'       => 'nullable|string',
-            'assigned_users'  => 'nullable|array',
-            'assigned_users.*'=> 'exists:users,id',
-            'extra_info'      => 'nullable|string',
+        $validated = $request->validate([
+            'department'       => 'required|string',
+            'shipment'         => 'nullable|string',
+            'box_number'       => 'nullable|string',
+            'ul'               => 'nullable|string',
+            'supplier'         => 'nullable|string',
+            'AT_number'        => 'nullable|string',
+            'zone'             => 'required|string',
+            'reason'           => 'required|string',
+            'task_name'        => 'nullable|string',
+            'assigned_users'   => 'nullable|array',
+            'assigned_users.*' => 'exists:users,id',
+            'extra_info'       => 'nullable|string',
+            'attachment'       => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx|max:2048',
         ]);
 
-        // create a Task
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('attachments', $filename, 'public');
+            $validated['attachment'] = $path;
+        } else {
+            $validated['attachment'] = null;
+        }
+
+        // Create a Task record
         $task = Task::create([
             'department'    => $validated['department'],
             'shipment'      => $validated['shipment'] ?? null,
+            'attachment' => $validated['attachment'] ?? null,
             'box_number'    => $validated['box_number'] ?? null,
             'ul'            => $validated['ul'] ?? null,
             'supplier'      => $validated['supplier'] ?? null,
@@ -47,21 +59,23 @@ class RegisterServiceController extends Controller
             'reason'        => $validated['task_name'] ?? $validated['reason'],
             'zone'          => $validated['zone'],
             'extra_info'    => $validated['extra_info'] ?? null,
-            'createdUserID' => auth()->id(), 
+            'createdUserID' => auth()->id(),
         ]);
 
+        // Log the activity
         \App\Helpers\ActivityLogger::log(
             'created',
             $task,
-            $task->id, 
+            $task->id,
             [
                 'name'         => $task->reason ?? null,
                 'department'   => $task->departmentModel?->name ?? $task->department,
                 'assigned_to'  => $task->assignedUser?->name ?? 'Unassigned',
                 'time_spent'   => $task->time_spent,
-            ]);
+            ]
+        );
 
-        // users differently based on role
+        // Attach users
         if (auth()->user()->role !== 'operator' && $request->filled('assigned_users')) {
             $task->users()->attach($request->assigned_users);
         } else {
@@ -502,6 +516,33 @@ class RegisterServiceController extends Controller
         $response->headers->set('Content-Disposition', 'attachment; filename="service_hours_export.csv"');
 
         return $response;
+    }
+
+    public function destroy(Task $task)
+    {
+        // Only admin or teamleader can delete
+        if (!in_array(auth()->user()->role, ['admin', 'teamleader'])) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Optional: delete attachment if exists
+        if ($task->attachment && \Storage::disk('public')->exists($task->attachment)) {
+            \Storage::disk('public')->delete($task->attachment);
+        }
+
+        $task->delete();
+
+        // Log the deletion
+        \App\Helpers\ActivityLogger::log(
+            'deleted',
+            $task,
+            $task->id,
+            ['department' => $task->department, 'reason' => $task->reason]
+        );
+
+        return redirect()
+            ->route('overview')
+            ->with('success', 'Task deleted successfully.');
     }
 
 }

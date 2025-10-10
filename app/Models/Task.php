@@ -21,6 +21,7 @@ class Task extends Model
         'validated',
         'invoiced',
         'invoiced_at',
+        'attachment',
     ];
 
 

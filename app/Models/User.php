@@ -44,8 +44,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-     public function tasks(){
-    return $this->belongsToMany(Task::class, 'service_registrations', 'user_id', 'task_id');
+    public function tasks(){
+        return $this->belongsToMany(Task::class, 'service_registrations', 'user_id', 'task_id');
     }
 
     /**
@@ -64,7 +64,7 @@ class User extends Authenticatable
     }
 
 
-        public function timeLogs()
+    public function timeLogs()
     {
         return $this->hasMany(TaskUserTime::class);
     }

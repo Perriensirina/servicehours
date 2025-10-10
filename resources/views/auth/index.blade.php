@@ -18,6 +18,31 @@
     <h2 class="text-center text-white mb-4">Activity Overview</h2>
 
     <div class="glassy-card p-4 rounded-4 shadow-lg">
+
+        <form method="GET" action="{{ route('activity.logs') }}" class="row g-3 mb-4">
+            <div class="col-md-3">
+                <input type="text" name="user" value="{{ request('user') }}" class="form-control" placeholder="Filter by user name">
+            </div>
+
+            <div class="col-md-3">
+                <select name="action" class="form-select">
+                    <option value="">All actions</option>
+                    <option value="created" {{ request('action') == 'created' ? 'selected' : '' }}>Created</option>
+                    <option value="updated" {{ request('action') == 'updated' ? 'selected' : '' }}>Updated</option>
+                    <option value="deleted" {{ request('action') == 'deleted' ? 'selected' : '' }}>Deleted</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <input type="date" name="date" value="{{ request('date') }}" class="form-control">
+            </div>
+
+            <div class="col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-50">Filter</button>
+                <a href="{{ route('activity.logs') }}" class="btn btn-secondary w-50">Reset</a>
+            </div>
+        </form>
+
         @foreach($logs as $log) 
             <div class="p-3 rounded glassy-table-container">
                 <div class="d-flex justify-content-between align-items-center">

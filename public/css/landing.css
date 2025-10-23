@@ -247,6 +247,10 @@ tr{
     border-bottom: 1px solid rgba(255, 255, 255, 0.5); 
 }
 
+.glassy-table-container .space {
+    padding: 12px 1px;
+}
+
 .glassy-table-container th {
     font-weight: 600;
     color: black;
@@ -272,49 +276,56 @@ tr{
     color: #000;                 
     background: rgba(255, 193, 5, 0.4);
     border: 1px solid rgba(255, 193, 5, 1);
-    box-shadow: 0 5px 15px rgba(255, 193, 5, .3);   
+    box-shadow: 0 5px 15px rgba(255, 193, 5, .3);
+    width: 100%;   
 }
 
 .grn {
     color: #000;                 
     background: rgba(68, 255, 5, 0.4);
     border: 1px solid rgba(68, 255, 5, 1);
-    box-shadow: 0 5px 15px rgba(68, 255, 5, .3);   
+    box-shadow: 0 5px 15px rgba(68, 255, 5, .3);
+    width: 100%;      
 }
 
 .dgrn {
     color: #000;                 
     background: rgba(26, 102, 0, 0.4);
     border: 1px solid rgba(26, 102, 0, 1);
-    box-shadow: 0 5px 15px rgba(26, 102, 0, .3);   
+    box-shadow: 0 5px 15px rgba(26, 102, 0, .3);
+    width: 100%;      
 }
 
 .prpl {
     color: #fff;                 
     background: rgba(168, 5, 255, 0.4);
     border: 1px solid rgba(168, 5, 255, 1);
-    box-shadow: 0 5px 15px rgba(168, 5, 255, .3);   
+    box-shadow: 0 5px 15px rgba(168, 5, 255, .3);
+    width: 100%;      
 }
 
 .bl {
     color: #fff;                 
     background: rgba(5, 213, 255, 0.4);
     border: 1px solid rgba(5, 213, 255, 1);
-    box-shadow: 0 5px 15px rgba(5, 213, 255, .3);   
+    box-shadow: 0 5px 15px rgba(5, 213, 255, .3);
+    width: 100%;      
 }
 
 .org{
     color: #fff;                 
     background: rgba(255, 111, 0, 0.4);
     border: 1px solid rgba(255, 111, 0, 1);
-    box-shadow: 0 5px 15px rgba(255, 111, 0, .3);  
+    box-shadow: 0 5px 15px rgba(255, 111, 0, .3);
+    width: 100%;     
 }
 
 .gray{
     color: #fff;                 
     background: rgba(82, 82, 82, 0.4);
     border: 1px solid rgba(82, 82, 82, 1);
-    box-shadow: 0 5px 15px rgba(82, 82, 82, .3);  
+    box-shadow: 0 5px 15px rgba(82, 82, 82, .3);
+    width: 100%;     
 }
 
 .text-center {
@@ -400,7 +411,7 @@ tr{
 }
 
 .action-section {
-    width: 50%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -473,6 +484,10 @@ tr{
     .container-filter {
         display: flex;
     }
+
+    .form-control {
+    margin-bottom: 0rem;
+}
 }
 
 /* Desktop and up */

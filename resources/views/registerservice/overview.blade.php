@@ -204,7 +204,7 @@
                                     @endif
                                 </div>
                             </td>
-                            <td class="glassy-table-container">
+                            <td class="glassy-table-container space">
                                 <ul class="list-unstyled mb-0">
                                     @foreach($registration->users as $user)
                                         <li class="mb-1 assigned-users-col action-section">
@@ -270,14 +270,14 @@
                                 </ul>
                             </td>
                             <td>
-                            @if(in_array(auth()->user()->role, ['admin', 'teamleader']))
-                                <form action="{{ route('tasks.destroy', $registration->id) }}" method="POST" style="display:inline;" 
-                                    onsubmit="return confirm('Are you sure you want to delete this task? This action cannot be undone.');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                </form>
-                            @endif
+                                @if(in_array(auth()->user()->role, ['admin', 'teamleader']))
+                                    <form action="{{ route('tasks.destroy', $registration->id) }}" method="POST" style="display:inline;"
+                                        onsubmit="return confirm('Are you sure you want to delete this task? This action cannot be undone.');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @empty
